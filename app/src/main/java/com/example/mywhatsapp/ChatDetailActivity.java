@@ -1,15 +1,28 @@
 package com.example.mywhatsapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.mywhatsapp.Adapter.ChatAdapter;
+import com.example.mywhatsapp.Models.MessageModel;
 import com.example.mywhatsapp.databinding.ActivityChatDetailBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ChatDetailActivity extends AppCompatActivity {
 
@@ -27,7 +40,8 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
-        String senderId = auth.getUid();
+
+        final String senderId = auth.getUid();
         String receiveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
@@ -42,5 +56,58 @@ public class ChatDetailActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        final ArrayList<MessageModel> messageModels = new ArrayList<>();
+        final ChatAdapter chatAdapter = new ChatAdapter(messageModels,this);
+
+        binding.chatRecyclerView.setAdapter(chatAdapter);
+
+        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
+        binding.chatRecyclerView.setLayoutManager(linearLayoutManager);
+
+        final String senderRoom = senderId + receiveId;
+        final String receiverRoom = receiveId +senderId;
+
+        database.getReference("chats").child(senderRoom)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        messageModels.clear();
+                        for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                            MessageModel model = snapshot1.getValue(MessageModel.class);
+
+                            messageModels.add(model);
+                        }
+                        chatAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
+        binding.send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = binding.etMessage.getText().toString().trim();
+                final MessageModel model = new MessageModel(senderId,msg);
+                model.setTimeStamp(new Date().getTime());
+                binding.etMessage.setText("");
+
+                database.getReference("chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        database.getReference().child("chats").child(receiverRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
     }
 }
