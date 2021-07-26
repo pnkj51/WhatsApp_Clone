@@ -36,8 +36,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
         this.context=context;
     }
 
-
-
     @NonNull
     @NotNull
     @Override
@@ -63,7 +61,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder>{
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         if(snapshot.hasChildren()){
                             for(DataSnapshot snapshot1 : snapshot.getChildren()){
-                                holder.lastMessage.setText(snapshot1.child("message").getValue(String.class));
+                                holder.lastMessage.setText(snapshot1.child("msg").getValue(String.class));
 
                             }
                         }
