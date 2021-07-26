@@ -1,5 +1,6 @@
 package com.example.mywhatsapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,14 +10,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.mywhatsapp.Models.Users;
 import com.example.mywhatsapp.databinding.ActivitySettingsBinding;
 import com.example.mywhatsapp.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -46,6 +56,38 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String status = binding.etStatus.getText().toString();
+                String userName = binding.etUserName.getText().toString();
+
+                HashMap<String,Object> obj = new HashMap<>();
+                obj.put("username",userName);
+                obj.put("status",status);
+
+                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).updateChildren(obj);
+            }
+        });
+
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        Users users = snapshot.getValue(Users.class);
+                        Picasso.get().load(users.getProfilepic()).placeholder(R.drawable.ic_icon_user)
+                                .into(binding.profileImage);
+
+                        binding.etStatus.setText(users.getStatus());
+                        binding.etUserName.setText(users.getUsername());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
         binding.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +112,13 @@ public class SettingsActivity extends AppCompatActivity {
             reference.putFile(sfile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            database.getReference("Users").child(FirebaseAuth.getInstance().getUid())
+                                    .child("profilepic").setValue(uri.toString());
+                        }
+                    });
                     Toast.makeText(SettingsActivity.this,"Profile Updated Successfully",Toast.LENGTH_SHORT).show();
                 }
             });
