@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.mywhatsapp.Adapter.FragmentAdapter;
-import com.example.mywhatsapp.databinding.ActivityLoginBinding;
 import com.example.mywhatsapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -53,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
                 auth.signOut();
                 Intent i = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.groupChat:
                 Intent intent = new Intent(MainActivity.this,GroupChatActivity.class);
                 startActivity(intent);
-
         }
         return super.onOptionsItemSelected(item);
     }

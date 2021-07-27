@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.mywhatsapp.Models.Users;
 import com.example.mywhatsapp.databinding.ActivitySettingsBinding;
-import com.example.mywhatsapp.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,6 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(SettingsActivity.this,MainActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

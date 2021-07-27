@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.example.mywhatsapp.Adapter.ChatAdapter;
 import com.example.mywhatsapp.Models.MessageModel;
-import com.example.mywhatsapp.databinding.ActivityChatDetailBinding;
 import com.example.mywhatsapp.databinding.ActivityGroupChatBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +40,7 @@ public class GroupChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(GroupChatActivity.this,MainActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 
