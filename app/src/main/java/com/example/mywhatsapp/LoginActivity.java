@@ -1,8 +1,5 @@
 package com.example.mywhatsapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.mywhatsapp.Models.Users;
 import com.example.mywhatsapp.databinding.ActivityLoginBinding;
-import com.example.mywhatsapp.databinding.ActivitySignupBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
@@ -45,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getSupportActionBar().hide();
+
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent i = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(i);
                                     Toast.makeText(LoginActivity.this,"logged in successfully",Toast.LENGTH_LONG).show();
-
+                                    finish();
                                 }
                                 else{
                                     Toast.makeText(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(i);
+
             }
         });
         binding.google.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(i);
             Toast.makeText(LoginActivity.this,"logged in successfully",Toast.LENGTH_LONG).show();
+            finish();
 
         }
 
@@ -147,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent i = new Intent(LoginActivity.this,MainActivity.class);
                             startActivity(i);
                             Toast.makeText(LoginActivity.this,"logged in successfully",Toast.LENGTH_LONG).show();
+                            finish();
 
 
                         } else {
