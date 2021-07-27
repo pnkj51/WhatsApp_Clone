@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_primary"
+    android:background="@color/whatsAppColor"
     android:padding="40dp"
     tools:context=".SettingsActivity">
 
@@ -56,7 +56,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
                 android:text="User Name"
-                android:textColor="@color/white"
+                android:textColor="@color/grayBackground"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -70,8 +70,8 @@
                 android:inputType="textPersonName"
                 android:padding="5dp"
                 android:paddingLeft="15dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/grayBackground"
+                android:textColorHint="@color/grayBackground" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +85,7 @@
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
                 android:text="Status"
-                android:textColor="@color/white"
+                android:textColor="@color/grayBackground"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -99,8 +99,8 @@
                 android:inputType="textPersonName"
                 android:padding="5dp"
                 android:paddingLeft="15dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColor="@color/grayBackground"
+                android:textColorHint="@color/grayBackground" />
 
         </LinearLayout>
 
@@ -133,10 +133,10 @@
             android:drawablePadding="15dp"
             android:padding="8dp"
             android:text="Privacy Policy"
-            android:textColor="@color/black"
+            android:textColor="@color/grayBackground"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:drawableTint="#100101" />
+            app:drawableTint="@color/grayBackground" />
 
         <TextView
             android:id="@+id/aboutUs"
@@ -147,10 +147,10 @@
             android:drawablePadding="15dp"
             android:padding="8dp"
             android:text="About Us"
-            android:textColor="@color/black"
+            android:textColor="@color/grayBackground"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:drawableTint="#100101" />
+            app:drawableTint="@color/grayBackground" />
 
         <TextView
             android:id="@+id/invite"
@@ -161,10 +161,10 @@
             android:drawablePadding="15dp"
             android:padding="8dp"
             android:text="Invite a Friend"
-            android:textColor="@color/black"
+            android:textColor="@color/grayBackground"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:drawableTint="#100101" />
+            app:drawableTint="@color/grayBackground" />
 
         <TextView
             android:id="@+id/notification"
@@ -175,10 +175,10 @@
             android:drawablePadding="15dp"
             android:padding="8dp"
             android:text="Notification"
-            android:textColor="@color/black"
+            android:textColor="@color/grayBackground"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:drawableTint="#100101" />
+            app:drawableTint="@color/grayBackground" />
 
         <TextView
             android:id="@+id/help"
@@ -189,9 +189,9 @@
             android:drawablePadding="15dp"
             android:padding="8dp"
             android:text="Help"
-            android:textColor="@color/black"
+            android:textColor="@color/grayBackground"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:drawableTint="#100101" />
+            app:drawableTint="@color/grayBackground" />
     </LinearLayout>
 </RelativeLayout>
